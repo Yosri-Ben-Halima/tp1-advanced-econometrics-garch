@@ -11,11 +11,11 @@ from scipy.stats import chi2
 class Tutorial1Tests(unittest.TestCase):
     @classmethod
     def setUpClass(cls):
-        if importlib.util.find_spec("tutorial1") is None:
+        if importlib.util.find_spec("src.tutorial1") is None:
             raise AssertionError(
                 "The Tutorial 1 A/B analysis module is not implemented."
             )
-        from tutorial1 import arch_lm, leverage_correlation, news_impact_curve
+        from src.tutorial1 import arch_lm, leverage_correlation, news_impact_curve
 
         cls.arch_lm = staticmethod(arch_lm)
         cls.leverage = staticmethod(leverage_correlation)
@@ -63,7 +63,7 @@ class Tutorial1Tests(unittest.TestCase):
         self.assertEqual(result["pairs"], len(r) - 1)
 
     def test_bhhh_for_both_initializations_matches_numerical_scores(self):
-        from garch_mle import fit_garch11
+        from src.garch_mle import fit_garch11
 
         rng = np.random.default_rng(123)
         y = np.empty(900)
@@ -105,7 +105,7 @@ class Tutorial1Tests(unittest.TestCase):
 
     def test_supplied_workbook_reproduces_published_loading_checks(self):
         from scipy.stats import kurtosis, skew
-        from tutorial1 import load_tutorial_data
+        from src.tutorial1 import load_tutorial_data
         root = Path(__file__).resolve().parents[1]
         r, provenance = load_tutorial_data(root/"NLNPE_TD_data.xlsx")
         self.assertTrue(provenance["official"])
@@ -117,8 +117,8 @@ class Tutorial1Tests(unittest.TestCase):
         self.assertEqual(round(skew(r, bias=False), 2), -.76)
 
     def test_independent_arch_benchmark_matches_required_precision(self):
-        from tutorial1 import load_tutorial_data, package_fit, package_parameters
-        from garch_mle import fit_garch11
+        from src.tutorial1 import load_tutorial_data, package_fit, package_parameters
+        from src.garch_mle import fit_garch11
         root = Path(__file__).resolve().parents[1]
         r, _ = load_tutorial_data(root/"NLNPE_TD_data.xlsx")
         custom = fit_garch11(r)

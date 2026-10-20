@@ -9,7 +9,7 @@ import pandas as pd
 from scipy.stats import kurtosis, skew
 from statsmodels.stats.diagnostic import het_arch
 
-from garch_mle import fit_garch11
+from .garch_mle import fit_garch11
 
 
 def arch_lm(residuals, lags=12):

@@ -8,7 +8,7 @@ node_modules/
 *.xlsx
 !NLNPE_TD_data.xlsx
 *.pdf
-!report.pdf
+!/report/report.pdf
 /results.json
 /prompt_log.md
 
@@ -16,3 +16,8 @@ node_modules/
 .env
 .env.*
 !.env.example
+
+# Local report authoring files
+/report/report.tex
+/report/report_render.py
+/report/report_evidence.json
