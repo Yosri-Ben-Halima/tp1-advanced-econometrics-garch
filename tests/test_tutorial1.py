@@ -107,7 +107,7 @@ class Tutorial1Tests(unittest.TestCase):
         from scipy.stats import kurtosis, skew
         from src.tutorial1 import load_tutorial_data
         root = Path(__file__).resolve().parents[1]
-        r, provenance = load_tutorial_data(root/"NLNPE_TD_data.xlsx")
+        r, provenance = load_tutorial_data(root/"data"/"NLNPE_TD_data.xlsx")
         self.assertTrue(provenance["official"])
         self.assertFalse(provenance["reconstructed"])
         self.assertEqual(len(r), 2387)
@@ -120,7 +120,7 @@ class Tutorial1Tests(unittest.TestCase):
         from src.tutorial1 import load_tutorial_data, package_fit, package_parameters
         from src.garch_mle import fit_garch11
         root = Path(__file__).resolve().parents[1]
-        r, _ = load_tutorial_data(root/"NLNPE_TD_data.xlsx")
+        r, _ = load_tutorial_data(root/"data"/"NLNPE_TD_data.xlsx")
         custom = fit_garch11(r)
         fitted = package_fit(r, backcast=float(np.var(r, ddof=0)))
         package = package_parameters(fitted)

@@ -62,7 +62,7 @@ def news_impact_curve(parameters, shocks, gjr=False):
     return curve, float(hbar)
 
 
-def load_tutorial_data(workbook="NLNPE_TD_data.xlsx", start="1981-01-01", end="2026-10-09"):
+def load_tutorial_data(workbook="data/NLNPE_TD_data.xlsx", start="1981-01-01", end="2026-10-09"):
     """Recompute percent log returns from the included, frozen workbook."""
     workbook = Path(workbook)
     if not workbook.exists():

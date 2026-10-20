@@ -15,7 +15,7 @@ The report PDF and input workbook are included in the repository.
 Report authoring files, other PDFs, generated results, caches, and `prompt_log.md`
 are excluded from Git.
 
-The included `NLNPE_TD_data.xlsx` is the instructor's workbook supplied by the
+The included `data/NLNPE_TD_data.xlsx` is the instructor's workbook supplied by the
 user on 16 October 2026. It replaces the earlier reconstructed input.
 The analysis recomputes 2,387 weekly log returns, multiplied by 100, from
 the S&P 500 closes (1981-01-09 to 2026-10-02), checks them against the supplied

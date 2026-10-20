@@ -13,7 +13,7 @@ ROOT = Path(__file__).resolve().parent
 
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument("--workbook", default="NLNPE_TD_data.xlsx")
+    parser.add_argument("--workbook", default="data/NLNPE_TD_data.xlsx")
     parser.add_argument("--start", default="1981-01-01")
     parser.add_argument("--end", default="2026-10-09")
     parser.add_argument("--initialization", choices=["sample", "long-run"], default="sample")
