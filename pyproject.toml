@@ -1,0 +1,16 @@
+[project]
+name = "tp1-advanced-econometrics-garch"
+version = "0.1.0"
+description = "Gaussian GARCH(1,1) maximum likelihood for S&P 500 percent log returns"
+readme = "README.md"
+requires-python = ">=3.13"
+dependencies = [
+    "numpy",
+    "pandas",
+    "scipy",
+    "matplotlib",
+    "openpyxl>=3.1.5",
+    "arch>=8.0.0",
+    "statsmodels>=0.15.0",
+    "pymupdf>=1.28.2",
+]

@@ -1,0 +1,16 @@
+__pycache__/
+*.py[cod]
+.venv/
+node_modules/
+.ruff_cache/
+
+# Local data, course material, and generated artifacts
+*.xlsx
+*.pdf
+/results.json
+/prompt_log.md
+
+# Local credentials
+.env
+.env.*
+!.env.example

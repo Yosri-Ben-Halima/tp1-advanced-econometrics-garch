@@ -1,0 +1,89 @@
+\documentclass[10pt,a4paper]{article}
+\usepackage[T1]{fontenc}
+\usepackage[french]{babel}
+\usepackage{lmodern,amsmath,amssymb,booktabs,graphicx,microtype}
+\usepackage[margin=15mm]{geometry}
+\pagestyle{empty}
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{1pt}
+\setlength{\topsep}{4pt}
+\setlength{\abovedisplayskip}{4pt}
+\setlength{\belowdisplayskip}{4pt}
+\newcommand{\sectionline}[1]{\vspace{4pt}\textbf{#1}\par}
+\begin{document}
+{\Large\bfseries Audit GARCH}\hfill {\small\bfseries Yosri BEN HALIMA}\par
+{\small Asymétrie de la volatilité du S\&P 500, rendements hebdomadaires}\par
+\vspace{3pt}\hrule height 0.35pt\vspace{5pt}
+
+J'audite notre GARCH(1,1) à moyenne constante sur les rendements logarithmiques
+hebdomadaires du S\&P 500 en pourcentage et le compare au module Python \texttt{arch}.
+J'examine ensuite l'asymétrie de la volatilité avec le GJR-GARCH et les courbes d'impact des chocs.
+
+\sectionline{1. Audit}
+\begin{center}
+\small
+\renewcommand{\arraystretch}{1.08}
+\textbf{Tableau 1 : audit des six points de contrôle}\par
+\begin{tabular}{@{}p{0.18\linewidth}p{0.09\linewidth}p{0.67\linewidth}@{}}
+\toprule
+Point & Verdict & Vérification et correction \\
+\midrule
+Résidus & Correct & La récurrence utilise $e_t=r_t-\mu$. \\
+Variance initiale & Correct & La variance empirique initialise la récurrence, avec le diviseur $T$. Ici, $h_1=5{,}2774$. \\
+Vraisemblance & Correct & Minimisation de l'opposé de la somme des log-vraisemblances gaussiennes. \\
+Contraintes & Correct & Transformations exponentielle/softmax : $\omega>0$, $\alpha,\beta>0$, $\alpha+\beta<1$. Les zéros exacts sont exclus. \\
+Erreurs-types & Erroné & La Hessienne numérique a été remplacée par BHHH : inverse de la somme des produits extérieurs des scores, moyenne incluse, puis méthode delta. \\
+Échelle & Correct & Facteur 100 conservé après le passage aux rendements logarithmiques. \\
+\bottomrule
+\end{tabular}
+\par\vspace{2pt}{\footnotesize Les verdicts portent sur le code initial. La comparaison utilise la version corrigée.}
+\end{center}
+
+\vspace{3pt}
+{\centering\small
+\textbf{Tableau 2 : estimations GARCH(1,1), notre implémentation et le module \texttt{arch}}\par
+\begin{tabular}{lrrrrr}
+\toprule
+ & Notre implémentation & É.-t. BHHH & GARCH \texttt{arch} & Écart absolu & Écart relatif (\%) \\
+\midrule
+$\mu$    & $0{,}260789$ & $0{,}035543$ & $0{,}260804$ & $0{,}000015$ & $0{,}01$ \\
+$\omega$ & $0{,}320175$ & $0{,}048116$ & $0{,}320190$ & $0{,}000015$ & $0{,}00$ \\
+$\alpha$ & $0{,}211234$ & $0{,}015736$ & $0{,}211268$ & $0{,}000034$ & $0{,}02$ \\
+$\beta$  & $0{,}739121$ & $0{,}018465$ & $0{,}739098$ & $0{,}000022$ & $0{,}00$ \\
+\bottomrule
+\end{tabular}
+\par}\vspace{3pt}
+
+Les coefficients concordent à deux décimales. Les log-vraisemblances valent
+$-5084{,}787$ et $-5084{,}785$. Pour $\omega$, l'écart entre erreurs-types BHHH
+($0{,}0481$) et robuste ($0{,}0845$) invite à la prudence sur l'inférence.
+
+ARCH-LM rejette la variance constante ($12$ retards, $LM=374{,}937$,
+$p=7{,}60\times10^{-73}$), puis ne détecte plus d'effet ARCH après filtrage ($p=0{,}712$).
+Ces contrôles confortent le code corrigé. La loi gaussienne et les prévisions restent à tester.
+
+\sectionline{2. Asymétrie}
+Pour le GJR, $\widehat\gamma=0{,}272354$, avec une erreur-type robuste de $0{,}056559$,
+$t=4{,}815$ et $p=1{,}47\times10^{-6}$ (asymptotique). La corrélation entre le rendement
+de la semaine et la valeur absolue du rendement suivant vaut $-0{,}2243$ (2\,386 paires).
+Cette corrélation négative suggère que les baisses tendent à précéder des mouvements
+plus amples la semaine suivante, sans établir de causalité.
+
+Pour isoler l'effet du choc, je fixe la variance à son niveau moyen de long terme
+(variance inconditionnelle) : $\bar h_G=6{,}449$ et $\bar h_J=5{,}360$ (pourcentage au carré).
+\begin{center}
+\includegraphics[width=\linewidth]{news_impact.pdf}
+\end{center}
+À choc de même ampleur, le GJR réagit davantage du côté négatif. Le GARCH
+reste symétrique. Les courbes diffèrent aussi du côté positif puisque chaque
+estimation a ses coefficients et sa variance de long terme. Celle du GJR suppose des innovations symétriques.
+
+\sectionline{3. Erreurs de l'IA et corrections}
+L'IA avait commis deux erreurs, corrigées ensuite :
+\begin{itemize}
+\setlength{\itemsep}{0pt}
+\setlength{\parsep}{0pt}
+\item des rendements simples au lieu de rendements logarithmiques.
+\item une Hessienne numérique au lieu de la méthode BHHH pour les erreurs-types.
+\end{itemize}
+\end{document}

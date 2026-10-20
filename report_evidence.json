@@ -1,0 +1,90 @@
+{
+  "n": 2387,
+  "start": "1981-01-09",
+  "end": "2026-10-02",
+  "statistics": {
+    "mean_pct": 0.16911479566542964,
+    "weekly_sd_pct": 2.297738406545145,
+    "annualised_sd_pct": 16.56922728480288,
+    "excess_kurtosis": 6.434057977316323,
+    "skewness": -0.7585351017375883
+  },
+  "custom": {
+    "estimates": {
+      "mu": 0.2607885036141401,
+      "omega": 0.32017479368200386,
+      "alpha": 0.21123391272916767,
+      "beta": 0.7391206222574765
+    },
+    "standard_errors": {
+      "mu": 0.035542560952164036,
+      "omega": 0.04811623544813818,
+      "alpha": 0.015735647325230473,
+      "beta": 0.018464645627985932
+    },
+    "loglik": -5084.787017748096,
+    "initialization": "sample",
+    "initial_variance": 5.277389970172398
+  },
+  "arch": {
+    "estimates": {
+      "mu": 0.2608036826826675,
+      "omega": 0.32018997357785933,
+      "alpha": 0.21126776285115575,
+      "beta": 0.7390981789938845
+    },
+    "loglik": -5084.785297558257,
+    "initialization": "sample variance (divisor T) used as presample backcast; first variance still follows package recursion",
+    "backcast": 5.277389970172398,
+    "initial_variance": 5.33564166306432,
+    "standard_errors": {
+      "mu": 0.03685162763943612,
+      "omega": 0.08454841780692335,
+      "alpha": 0.03506291428585043,
+      "beta": 0.03766442227739767
+    }
+  },
+  "gjr": {
+    "estimates": {
+      "mu": 0.1720906410264096,
+      "omega": 0.36843159939656905,
+      "alpha": 0.05157581958279857,
+      "gamma": 0.27235442917155667,
+      "beta": 0.7435102361945234
+    },
+    "loglik": -5050.715330136865,
+    "gamma_se": 0.05655859550609748,
+    "gamma_t": 4.815438338496129,
+    "gamma_p": 1.4687711439251909e-06,
+    "covariance": "Bollerslev-Wooldridge robust sandwich"
+  },
+  "leverage": {
+    "correlation": -0.2243265657848989,
+    "pairs": 2386
+  },
+  "nic": {
+    "garch_hbar": 6.4492253944216165,
+    "gjr_hbar": 5.360039695557253,
+    "z_min": -4,
+    "z_max": 4,
+    "units": "next-period variance in percent squared",
+    "fixed_state": "each model's own unconditional variance",
+    "positive_shock_equality": "not required for separately fitted models"
+  },
+  "arch_lm": {
+    "lm": 374.9370005048775,
+    "pvalue": 7.596280596960275e-73,
+    "f": 36.89888749404701,
+    "f_pvalue": 1.454682203472502e-79,
+    "lags": 12,
+    "auxiliary_n": 2375
+  },
+  "post_garch_arch_lm": {
+    "lm": 8.89136788316501,
+    "pvalue": 0.7121800057661576,
+    "f": 0.7396607047456594,
+    "f_pvalue": 0.7133113428858698,
+    "lags": 12,
+    "auxiliary_n": 2375
+  }
+}
