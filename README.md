@@ -12,7 +12,8 @@ uv run python main.py
 
 Running the analysis writes `report/results.json`.
 The report PDF and input workbook are included in the repository.
-Report authoring files, other PDFs, generated results, caches, and `prompt_log.md`
+The prompt log and slides PDF are kept locally under `context/`.
+Report authoring files, other PDFs, generated results, caches, and `context/`
 are excluded from Git.
 
 The included `data/NLNPE_TD_data.xlsx` is the instructor's workbook supplied by the

@@ -10,7 +10,7 @@ node_modules/
 *.pdf
 !/report/report.pdf
 /report/results.json
-/prompt_log.md
+/context/
 
 # Local credentials
 .env
