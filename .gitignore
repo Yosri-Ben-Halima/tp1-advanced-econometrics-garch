@@ -4,9 +4,11 @@ __pycache__/
 node_modules/
 .ruff_cache/
 
-# Local data, course material, and generated artifacts
+# Course material and generated artifacts
 *.xlsx
+!NLNPE_TD_data.xlsx
 *.pdf
+!report.pdf
 /results.json
 /prompt_log.md
 

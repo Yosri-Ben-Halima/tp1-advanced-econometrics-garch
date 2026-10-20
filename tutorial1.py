@@ -12,18 +12,6 @@ from statsmodels.stats.diagnostic import het_arch
 from garch_mle import fit_garch11
 
 
-COURSE_REFERENCES = {
-    "residuals": "Course slides 36, 45; TD slide 11",
-    "initialization": "Course slide 35; TD slide 11",
-    "likelihood": "Course slide 38; TD slide 11",
-    "constraints": "Course slide 35; TD slide 11",
-    "standard_errors": "Course slides 39-40; TD slide 11 (BHHH option)",
-    "scale": "Course slide 48; TD slide 7",
-    "arch_lm": "Course slide 50; TD slide 8",
-    "nic": "Course slides 53, 56; TD slides 13-15",
-}
-
-
 def arch_lm(residuals, lags=12):
     """ARCH-LM: residual squares regressed on an intercept and lagged squares.
 
@@ -176,14 +164,14 @@ def analyze(returns, provenance, initialization="sample"):
     gn, gh = news_impact_curve(custom["estimates"], z)
     jn, jh = news_impact_curve(gp, z, gjr=True)
     checkpoints = [
-        {"checkpoint": title, "tag": "correct", "reference": COURSE_REFERENCES[key]}
-        for key, title in [
-            ("residuals", "Residual, not return"),
-            ("initialization", "Initial variance"),
-            ("likelihood", "Likelihood sign"),
-            ("constraints", "Positive, stationary parameters"),
-            ("standard_errors", "BHHH standard errors"),
-            ("scale", "Returns in percent"),
+        {"checkpoint": title, "tag": "correct"}
+        for title in [
+            "Residual, not return",
+            "Initial variance",
+            "Likelihood sign",
+            "Positive, stationary parameters",
+            "BHHH standard errors",
+            "Returns in percent",
         ]
     ]
     result = {

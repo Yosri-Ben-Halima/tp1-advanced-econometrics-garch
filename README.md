@@ -1,6 +1,6 @@
 # Tutorial 1: GARCH audit and leverage
 
-This project covers setup and Blocks A/B of `NLNPE_TD_print_2.pdf`. Block C is excluded.
+This project covers GARCH estimation, diagnostics, leverage, and news impact curves.
 The one-page report is written in `report.tex`; Python reproduces the calculations
 and figure, then compiles the manuscript without generating its prose.
 
@@ -10,11 +10,10 @@ uv run python main.py
 ```
 
 Outputs are in the repository root: `report.pdf`, `news_impact.pdf` and
-`results.json`. The workbook, TD slides, generated outputs, and `prompt_log.md` stay local and are excluded from Git.
-The log is reconstructed from the visible conversation, not a raw chat export;
-its earlier commands and numbers describe earlier project versions.
+`results.json`. The report PDF and input workbook are included in the repository.
+Other PDFs, generated results, caches, and `prompt_log.md` are excluded from Git.
 
-Place `NLNPE_TD_data.xlsx` in the project root before running the analysis or full test suite. This workbook is the instructor's workbook supplied by the
+The included `NLNPE_TD_data.xlsx` is the instructor's workbook supplied by the
 user on 16 October 2026. It replaces the earlier reconstructed input.
 The analysis recomputes 2,387 weekly log returns, multiplied by 100, from
 the S&P 500 closes (1981-01-09 to 2026-10-02), checks them against the supplied
