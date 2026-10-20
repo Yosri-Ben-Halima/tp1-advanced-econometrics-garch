@@ -10,7 +10,7 @@ uv sync
 uv run python main.py
 ```
 
-Running the analysis writes `results.json` in the repository root.
+Running the analysis writes `report/results.json`.
 The report PDF and input workbook are included in the repository.
 Report authoring files, other PDFs, generated results, caches, and `prompt_log.md`
 are excluded from Git.
@@ -21,7 +21,7 @@ The analysis recomputes 2,387 weekly log returns, multiplied by 100, from
 the S&P 500 closes (1981-01-09 to 2026-10-02), checks them against the supplied
 return column, and matches all five published checks at displayed precision.
 The workbook also contains its README, data dictionary and daily data sheet.
-Its SHA-256 is recorded in `results.json` to identify the input used.
+Its SHA-256 is recorded in `report/results.json` to identify the input used.
 
 `src/garch_mle.py` implements Gaussian constant-mean GARCH without `arch`. It uses
 residuals, exponential/softmax constraints and BHHH standard errors from the

@@ -22,10 +22,13 @@ def main():
     result, _, _ = analyze(returns, provenance, args.initialization)
     result["environment"] = {p: importlib.metadata.version(p) for p in ["numpy", "pandas", "scipy", "arch", "statsmodels"]}
     result["environment"]["python"] = sys.version.split()[0]
-    (ROOT/"results.json").write_text(json.dumps(result, indent=2), encoding="utf-8")
+    report_dir = ROOT / "report"
+    report_dir.mkdir(exist_ok=True)
+    results_path = report_dir / "results.json"
+    results_path.write_text(json.dumps(result, indent=2), encoding="utf-8")
     print(f"Tutorial 1 A/B: {result['n']} weekly returns; arch benchmark matches = {result['benchmark_pass']}")
     print(f"GJR gamma = {result['gjr']['estimates']['gamma']:.6f}; robust Wald = {result['gjr']['gamma_t']:.3f}")
-    print(f"Numerical results: {ROOT/'results.json'}")
+    print(f"Numerical results: {results_path}")
 
 
 if __name__ == "__main__":

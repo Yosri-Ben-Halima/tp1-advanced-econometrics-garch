@@ -9,7 +9,7 @@ node_modules/
 !/data/NLNPE_TD_data.xlsx
 *.pdf
 !/report/report.pdf
-/results.json
+/report/results.json
 /prompt_log.md
 
 # Local credentials
