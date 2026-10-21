@@ -1,0 +1,200 @@
+{
+  "scope": "Tutorial 1 setup, A and B only; Block C excluded",
+  "number_labels": {
+    "results": "computed",
+    "innovation_law": "assumed Gaussian",
+    "annualisation": "assumed sqrt(52)",
+    "TD_reference": "stated in handout"
+  },
+  "provenance": {
+    "official": true,
+    "reconstructed": false,
+    "source": "C:\\Users\\mathi\\mosef\\code\\courses\\time-series\\tp1-garch\\data\\NLNPE_TD_data.xlsx",
+    "sheet": "weekly_spx_ust10",
+    "definition": "100 log(P_t/P_(t-1))",
+    "sha256": "59de726ec0bdaa0ab4c00f1c091b76d1809ce58362a731ba51f9ef33953ca012",
+    "requested_start": "1981-01-01",
+    "exclusive_end": "2026-10-09"
+  },
+  "start": "1981-01-09",
+  "end": "2026-10-02",
+  "n": 2387,
+  "statistics": {
+    "mean_pct": 0.16911479566542964,
+    "weekly_sd_pct": 2.297738406545145,
+    "annualised_sd_pct": 16.56922728480288,
+    "excess_kurtosis": 6.434057977316323,
+    "skewness": -0.7585351017375883
+  },
+  "arch_lm": {
+    "lm": 374.93700050487723,
+    "pvalue": 7.59628059696136e-73,
+    "f": 36.89888749404698,
+    "f_pvalue": 1.454682203472724e-79,
+    "lags": 12,
+    "auxiliary_n": 2375
+  },
+  "post_garch_arch_lm": {
+    "lm": 8.891349326027726,
+    "pvalue": 0.7121815806785623,
+    "f": 0.7396591552017805,
+    "f_pvalue": 0.7133129170696317,
+    "lags": 12,
+    "auxiliary_n": 2375
+  },
+  "post_gjr_arch_lm": {
+    "lm": 7.597849132092355,
+    "pvalue": 0.8157150842800819,
+    "f": 0.6317093064586581,
+    "f_pvalue": 0.816708298558177,
+    "lags": 12,
+    "auxiliary_n": 2375
+  },
+  "custom": {
+    "hessian_standard_errors": {
+      "mu": 0.03555164161936253,
+      "omega": 0.06277598270227865,
+      "alpha": 0.02312207350542534,
+      "beta": 0.026061776783825104
+    },
+    "estimates": {
+      "mu": 0.260788513004768,
+      "omega": 0.32017563887294015,
+      "alpha": 0.21123400163848496,
+      "beta": 0.7391203528282658
+    },
+    "standard_errors": {
+      "mu": 0.03554256773503239,
+      "omega": 0.04811633236309491,
+      "alpha": 0.015735660163983027,
+      "beta": 0.0184646665126662
+    },
+    "loglik": -5084.787017748058,
+    "initialization": "sample",
+    "initial_variance": 5.277389970172398
+  },
+  "arch": {
+    "estimates": {
+      "mu": 0.26080374438107806,
+      "omega": 0.3201899283431809,
+      "alpha": 0.21126776090726265,
+      "beta": 0.7390981915532145
+    },
+    "loglik": -5084.785297558255,
+    "initialization": "sample variance (divisor T) used as presample backcast; first variance still follows package recursion",
+    "backcast": 5.277389970172398,
+    "initial_variance": 5.33564167385144,
+    "standard_errors": {
+      "mu": 0.03685161907703904,
+      "omega": 0.08454834225536931,
+      "alpha": 0.03506290350365754,
+      "beta": 0.03766439691867668
+    },
+    "classic_standard_errors": {
+      "mu": 0.03555185437872819,
+      "omega": 0.06277047762412517,
+      "alpha": 0.023131227892690037,
+      "beta": 0.02606214787967815
+    }
+  },
+  "gjr": {
+    "estimates": {
+      "mu": 0.17209067090203206,
+      "omega": 0.368431718437429,
+      "alpha": 0.05157579980471298,
+      "gamma": 0.27235453637527623,
+      "beta": 0.743510190490426
+    },
+    "loglik": -5050.715330136879,
+    "gamma_se": 0.056558709499086104,
+    "gamma_t": 4.815430528514393,
+    "gamma_p": 1.468828594065063e-06,
+    "covariance": "Bollerslev-Wooldridge robust sandwich"
+  },
+  "comparison": [
+    {
+      "Parameter": "mu",
+      "Custom estimate": 0.260788513004768,
+      "Custom BHHH SE": 0.03554256773503239,
+      "arch estimate": 0.26080374438107806,
+      "Abs. difference": 1.5231376310043121e-05,
+      "Relative difference (%)": 0.0058401678036445375,
+      "Same to 2 decimals": true
+    },
+    {
+      "Parameter": "omega",
+      "Custom estimate": 0.32017563887294015,
+      "Custom BHHH SE": 0.04811633236309491,
+      "arch estimate": 0.3201899283431809,
+      "Abs. difference": 1.4289470240735902e-05,
+      "Relative difference (%)": 0.004462810655749418,
+      "Same to 2 decimals": true
+    },
+    {
+      "Parameter": "alpha",
+      "Custom estimate": 0.21123400163848496,
+      "Custom BHHH SE": 0.015735660163983027,
+      "arch estimate": 0.21126776090726265,
+      "Abs. difference": 3.375926877768887e-05,
+      "Relative difference (%)": 0.015979375477220926,
+      "Same to 2 decimals": true
+    },
+    {
+      "Parameter": "beta",
+      "Custom estimate": 0.7391203528282658,
+      "Custom BHHH SE": 0.0184646665126662,
+      "arch estimate": 0.7390981915532145,
+      "Abs. difference": 2.216127505128007e-05,
+      "Relative difference (%)": 0.002998420954691847,
+      "Same to 2 decimals": true
+    }
+  ],
+  "benchmark_pass": true,
+  "leverage": {
+    "correlation": -0.22432656578489893,
+    "pairs": 2386
+  },
+  "checkpoints": [
+    {
+      "checkpoint": "Residual, not return",
+      "tag": "correct"
+    },
+    {
+      "checkpoint": "Initial variance",
+      "tag": "correct"
+    },
+    {
+      "checkpoint": "Likelihood sign",
+      "tag": "correct"
+    },
+    {
+      "checkpoint": "Positive, stationary parameters",
+      "tag": "correct"
+    },
+    {
+      "checkpoint": "BHHH standard errors",
+      "tag": "correct"
+    },
+    {
+      "checkpoint": "Returns in percent",
+      "tag": "correct"
+    }
+  ],
+  "nic": {
+    "garch_hbar": 6.449218968429135,
+    "gjr_hbar": 5.360040500975932,
+    "z_min": -4,
+    "z_max": 4,
+    "units": "next-period variance in percent squared",
+    "fixed_state": "each model's own unconditional variance",
+    "positive_shock_equality": "not required for separately fitted models"
+  },
+  "environment": {
+    "numpy": "2.5.4",
+    "pandas": "3.0.6",
+    "scipy": "1.18.1",
+    "arch": "8.0.0",
+    "statsmodels": "0.15.0",
+    "python": "3.13.16"
+  }
+}

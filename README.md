@@ -11,10 +11,17 @@ uv run python main.py
 ```
 
 Running the analysis writes `report/results.json`.
-The report PDF and input workbook are included in the repository.
-The prompt log and slides PDF are kept locally under `context/`.
-Report authoring files, other PDFs, generated results, caches, and `context/`
-are excluded from Git.
+The report source (`report/report.tex`, `report/report_render.py`,
+`report/report_evidence.json`), the report PDF, the annotated prompt log
+(`context/prompt_log.md`) and the input workbook are included in the repository.
+`report/deliverable.pdf` is the printed hand-in: the one-page report followed by
+the prompt log, the output of `main.py` and code excerpts. Rebuild it with a
+LaTeX compiler (`tectonic`) on the PATH:
+
+```powershell
+uv run python -c "from src.tutorial1 import analyze, load_tutorial_data; from report.report_render import compile_report; r, p = load_tutorial_data('data/NLNPE_TD_data.xlsx'); compile_report(analyze(r, p)[0], 'report')"
+uv run python report/build_deliverable.py
+```
 
 The included `data/NLNPE_TD_data.xlsx` is the instructor's workbook supplied by the
 user on 16 October 2026. It replaces the earlier reconstructed input.

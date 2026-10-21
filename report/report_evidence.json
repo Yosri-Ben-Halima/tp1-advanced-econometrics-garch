@@ -1,0 +1,102 @@
+{
+  "n": 2387,
+  "start": "1981-01-09",
+  "end": "2026-10-02",
+  "statistics": {
+    "mean_pct": 0.16911479566542964,
+    "weekly_sd_pct": 2.297738406545145,
+    "annualised_sd_pct": 16.56922728480288,
+    "excess_kurtosis": 6.434057977316323,
+    "skewness": -0.7585351017375883
+  },
+  "custom": {
+    "hessian_standard_errors": {
+      "mu": 0.03555164161936253,
+      "omega": 0.06277598270227865,
+      "alpha": 0.02312207350542534,
+      "beta": 0.026061776783825104
+    },
+    "estimates": {
+      "mu": 0.260788513004768,
+      "omega": 0.32017563887294015,
+      "alpha": 0.21123400163848496,
+      "beta": 0.7391203528282658
+    },
+    "standard_errors": {
+      "mu": 0.03554256773503239,
+      "omega": 0.04811633236309491,
+      "alpha": 0.015735660163983027,
+      "beta": 0.0184646665126662
+    },
+    "loglik": -5084.787017748058,
+    "initialization": "sample",
+    "initial_variance": 5.277389970172398
+  },
+  "arch": {
+    "estimates": {
+      "mu": 0.26080374438107806,
+      "omega": 0.3201899283431809,
+      "alpha": 0.21126776090726265,
+      "beta": 0.7390981915532145
+    },
+    "loglik": -5084.785297558255,
+    "initialization": "sample variance (divisor T) used as presample backcast; first variance still follows package recursion",
+    "backcast": 5.277389970172398,
+    "initial_variance": 5.33564167385144,
+    "standard_errors": {
+      "mu": 0.03685161907703904,
+      "omega": 0.08454834225536931,
+      "alpha": 0.03506290350365754,
+      "beta": 0.03766439691867668
+    },
+    "classic_standard_errors": {
+      "mu": 0.03555185437872819,
+      "omega": 0.06277047762412517,
+      "alpha": 0.023131227892690037,
+      "beta": 0.02606214787967815
+    }
+  },
+  "gjr": {
+    "estimates": {
+      "mu": 0.17209067090203206,
+      "omega": 0.368431718437429,
+      "alpha": 0.05157579980471298,
+      "gamma": 0.27235453637527623,
+      "beta": 0.743510190490426
+    },
+    "loglik": -5050.715330136879,
+    "gamma_se": 0.056558709499086104,
+    "gamma_t": 4.815430528514393,
+    "gamma_p": 1.468828594065063e-06,
+    "covariance": "Bollerslev-Wooldridge robust sandwich"
+  },
+  "leverage": {
+    "correlation": -0.22432656578489893,
+    "pairs": 2386
+  },
+  "nic": {
+    "garch_hbar": 6.449218968429135,
+    "gjr_hbar": 5.360040500975932,
+    "z_min": -4,
+    "z_max": 4,
+    "units": "next-period variance in percent squared",
+    "fixed_state": "each model's own unconditional variance",
+    "positive_shock_equality": "not required for separately fitted models"
+  },
+  "arch_lm": {
+    "lm": 374.93700050487723,
+    "pvalue": 7.59628059696136e-73,
+    "f": 36.89888749404698,
+    "f_pvalue": 1.454682203472724e-79,
+    "lags": 12,
+    "auxiliary_n": 2375
+  },
+  "post_garch_arch_lm": {
+    "lm": 8.891349326027726,
+    "pvalue": 0.7121815806785623,
+    "f": 0.7396591552017805,
+    "f_pvalue": 0.7133129170696317,
+    "lags": 12,
+    "auxiliary_n": 2375
+  }
+}

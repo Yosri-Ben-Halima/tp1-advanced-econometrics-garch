@@ -1,0 +1,89 @@
+\documentclass[10pt,a4paper]{article}
+\usepackage[T1]{fontenc}
+\usepackage[english]{babel}
+\usepackage{lmodern,amsmath,amssymb,booktabs,graphicx,microtype}
+\usepackage[margin=14mm]{geometry}
+\pagestyle{empty}
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{1pt}
+\setlength{\topsep}{4pt}
+\setlength{\abovedisplayskip}{4pt}
+\setlength{\belowdisplayskip}{4pt}
+\newcommand{\sectionline}[1]{\vspace{3pt}\textbf{#1}\par}
+% Number labels (rules 4-5 of the handout).
+\newcommand{\lc}{\textsuperscript{\,c}}
+\newcommand{\la}{\textsuperscript{\,a}}
+\begin{document}
+{\Large\bfseries GARCH Audit}\hfill {\small\bfseries Yosri BEN HALIMA, Mathieu CHABIRAND}\par
+{\small Volatility asymmetry of the S\&P 500, weekly returns}\par
+\vspace{3pt}\hrule height 0.35pt\vspace{4pt}
+
+We audit the constant-mean GARCH(1,1) written by the AI on weekly S\&P 500 log-returns in percent
+and compare it with the Python \texttt{arch} package. We then study volatility asymmetry with the GJR-GARCH
+and the news impact curves.
+{\small\emph{Labels}: \lc{} computed (repository code, sheet \texttt{weekly\_spx\_ust10}), \la{} assumed;
+no number is simulated or taken from an AI answer. \emph{Slide} $n$: course deck (NLNPE); \emph{handout p.} $n$: tutorial handout.}
+
+\sectionline{1. Audit}
+\begin{center}
+\small
+\renewcommand{\arraystretch}{1.05}
+\textbf{Table 1: the six checkpoints (handout p.~11), on the AI's initial code}\par
+\begin{tabular}{@{}p{0.15\linewidth}p{0.075\linewidth}p{0.10\linewidth}p{0.605\linewidth}@{}}
+\toprule
+Checkpoint & Verdict & Reference & Verification \\
+\midrule
+Residuals & Correct & slide 34 & The recursion uses $e_t=r_t-\mu$, not $r_t$. \\
+Initial variance & Correct & slide 36 & Stated: sample variance, divisor $T$\la, $h_1=5.2774$\lc. The course alternative is $\omega/(1-\alpha-\beta)$. \\
+Likelihood & Correct & slide 39 & Minimises $-\sum_t\log\ell_t$ (Gaussian): correct sign. \\
+Constraints & Correct & slide 36 & Exponential/softmax reparametrisation: $\omega>0$, $\alpha,\beta>0$, $\alpha+\beta<1$, no clipping. Exact zeros are excluded. \\
+Standard errors & Correct & slides 40-41 & Numerical Hessian: a valid estimator of $I(\theta)$. Recomputed at the optimum, it gives plausible $t$ ($7.3$ to $28.4$\lc) and matches \texttt{arch}'s classic covariance to $10^{-4}$\lc. BHHH (slide 46) kept as a cross-check. \\
+Scale & Correct & slide 56 & The code expects returns in percent, as the prompt asks; we feed it $r_t=100\log(P_t/P_{t-1})$, hence $\hat\omega=0.32$\lc. \\
+\bottomrule
+\end{tabular}
+\par\vspace{1pt}{\footnotesize The rest of the report uses the final version (BHHH standard errors, Hessian as a cross-check).}
+\end{center}
+
+\vspace{1pt}
+{\centering\small
+\textbf{Table 2: GARCH(1,1) estimates\lc, our implementation and the \texttt{arch} package}\par
+\begin{tabular}{lrrrrr}
+\toprule
+ & Our implementation & BHHH s.e. & \texttt{arch} GARCH & Absolute gap & Relative gap (\%) \\
+\midrule
+$\mu$    & $0.260789$ & $0.035543$ & $0.260804$ & $0.000015$ & $0.01$ \\
+$\omega$ & $0.320176$ & $0.048116$ & $0.320190$ & $0.000014$ & $0.00$ \\
+$\alpha$ & $0.211234$ & $0.015736$ & $0.211268$ & $0.000034$ & $0.02$ \\
+$\beta$  & $0.739120$ & $0.018465$ & $0.739098$ & $0.000022$ & $0.00$ \\
+\bottomrule
+\end{tabular}
+\par}\vspace{2pt}
+
+The coefficients agree to two decimals. The log-likelihoods are $-5084.787$\lc{} and $-5084.785$\lc.
+For $\omega$, the BHHH ($0.048$\lc), Hessian ($0.063$\lc) and robust ($0.085$\lc) standard errors diverge:
+fat tails (excess kurtosis $6.4$\lc) call for caution with Gaussian inference.
+ARCH-LM rejects a constant variance ($12$ lags\la, $LM=374.9$\lc, $p=7.6\times10^{-73}$\lc),
+then finds no ARCH effect left after filtering ($p=0.712$\lc).
+
+\sectionline{2. Asymmetry}
+GJR estimated with \texttt{arch} (slide 52), robust standard errors: $\hat\mu=0.172$\lc, $\hat\omega=0.368$\lc,
+$\hat\alpha=0.052$\lc, $\hat\beta=0.744$\lc{} and $\hat\gamma=0.272355$\lc{} (s.e. $0.056559$\lc, $t=4.815$\lc,
+$p=1.47\times10^{-6}$\lc, asymptotic). The correlation between this week's return and the absolute value of next
+week's return is $-0.2243$\lc{} (2,386 pairs): falls tend to precede larger moves, without establishing causality.
+
+We hold the current variance at its unconditional level (handout p.~15), the $\gamma/2$ assuming symmetric innovations\la:
+\mbox{$\bar h_G=\omega/(1-\alpha-\beta)=6.449$\lc} and \mbox{$\bar h_J=\omega/(1-\alpha-\beta-\gamma/2)=5.360$\lc} ($\%^2$).
+\begin{center}
+\includegraphics[width=\linewidth]{news_impact.pdf}
+\end{center}
+\vspace{-2pt}
+Checks of handout p.~15: (1)~$\checkmark$ curves drawn at $\bar h$, not at the last $h_t$;
+(2)~$\checkmark$ indicator on $z<0$ and $\gamma/2$ in $\bar h_J$; (3)~$\times$ the curves do not coincide for $z>0$,
+yet the asymmetry is not on the wrong side: the GARCH spreads over both sides a response the GJR keeps for negative
+shocks ($\hat\alpha_G=0.211$ vs $\hat\alpha_J=0.052$). Next-week variance at $z=+2$: $10.5$\lc{} (GARCH) vs $5.5$\lc{} (GJR);
+at $z=-2$: $10.5$\lc{} vs $11.3$\lc.
+
+\vspace{3pt}
+\textbf{Conclusion.} The AI got one point wrong that the course settles: pressed on its numerical-Hessian standard
+errors, it called them wrong, whereas the Hessian estimates the information matrix just as BHHH does (slides 40-41 and 46).
+\end{document}
