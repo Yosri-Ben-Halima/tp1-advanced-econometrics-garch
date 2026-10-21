@@ -102,8 +102,8 @@ def load_tutorial_data(workbook="data/NLNPE_TD_data.xlsx", start="1981-01-01", e
     return returns.rename("return_pct"), provenance
 
 
-def package_fit(returns, asymmetric=False, backcast=None):
-    """Constant-mean Gaussian arch fit, optional presample backcast and robust SE."""
+def package_fit(returns, asymmetric=False, backcast=None, cov_type="robust"):
+    """Constant-mean Gaussian arch fit, optional presample backcast, robust SE by default."""
     model = arch_model(
         returns,
         mean="Constant",
@@ -115,7 +115,7 @@ def package_fit(returns, asymmetric=False, backcast=None):
         rescale=False,
     )
     result = model.fit(
-        disp="off", cov_type="robust", options={"maxiter": 2000, "ftol": 1e-10},
+        disp="off", cov_type=cov_type, options={"maxiter": 2000, "ftol": 1e-10},
         backcast=backcast,
     )
     if result.convergence_flag != 0:
@@ -142,6 +142,8 @@ def analyze(returns, provenance, initialization="sample"):
     custom = fit_garch11(r, initialization=initialization)
     benchmark_backcast = float(np.var(r, ddof=0))
     benchmark = package_fit(returns, backcast=benchmark_backcast)
+    # Hessian-based (classic) covariance, to cross-check our numerical Hessian.
+    benchmark_classic = package_fit(returns, backcast=benchmark_backcast, cov_type="classic")
     gjr = package_fit(returns, asymmetric=True)
     bp, gp = package_parameters(benchmark), package_parameters(gjr)
     comparison = pd.DataFrame(
@@ -207,6 +209,9 @@ def analyze(returns, provenance, initialization="sample"):
             "initial_variance": float(benchmark.conditional_volatility.iloc[0] ** 2),
             "standard_errors": {
                 k: float(v) for k, v in package_parameters_se(benchmark).items()
+            },
+            "classic_standard_errors": {
+                k: float(v) for k, v in package_parameters_se(benchmark_classic).items()
             },
         },
         "gjr": {

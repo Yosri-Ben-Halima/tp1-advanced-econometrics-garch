@@ -28,6 +28,9 @@ def main():
     results_path.write_text(json.dumps(result, indent=2), encoding="utf-8")
     print(f"Tutorial 1 A/B: {result['n']} weekly returns; arch benchmark matches = {result['benchmark_pass']}")
     print(f"GJR gamma = {result['gjr']['estimates']['gamma']:.6f}; robust Wald = {result['gjr']['gamma_t']:.3f}")
+    for name, se in result["custom"]["hessian_standard_errors"].items():
+        print(f"{name}: Hessian SE = {se:.5f}, t = {result['custom']['estimates'][name]/se:.2f}; "
+              f"arch classic SE = {result['arch']['classic_standard_errors'][name]:.5f}")
     print(f"Numerical results: {results_path}")
 
 

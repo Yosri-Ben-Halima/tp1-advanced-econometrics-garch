@@ -7,6 +7,42 @@ from scipy.optimize import minimize
 from scipy.special import softmax
 
 
+def hessian_standard_errors(y, theta, sample_variance, initialization="sample", rel_step=1e-4):
+    """Standard errors from the inverse numerical Hessian of minus the log likelihood.
+
+    This is the AI's initial covariance choice, kept as a cross-check of BHHH.
+    Central differences in natural parameters (mu, omega, alpha, beta), with
+    steps proportional to each parameter.
+    """
+    theta = np.asarray(theta, dtype=float)
+
+    def nll(p):
+        mu, w, a, b = p
+        e = y - mu
+        h = np.empty(y.size)
+        h[0] = sample_variance if initialization == "sample" else w / (1 - a - b)
+        for t in range(1, y.size):
+            h[t] = w + a * e[t - 1] ** 2 + b * h[t - 1]
+        return 0.5 * np.sum(np.log(2 * np.pi) + np.log(h) + e**2 / h)
+
+    k = theta.size
+    step = rel_step * np.maximum(np.abs(theta), 1e-2)
+    H = np.empty((k, k))
+    for i in range(k):
+        for j in range(k):
+            di = np.zeros(k)
+            dj = np.zeros(k)
+            di[i], dj[j] = step[i], step[j]
+            H[i, j] = (
+                nll(theta + di + dj) - nll(theta + di - dj)
+                - nll(theta - di + dj) + nll(theta - di - dj)
+            ) / (4 * step[i] * step[j])
+    if not np.isfinite(H).all() or np.linalg.eigvalsh(H).min() <= 0:
+        warnings.warn("Numerical Hessian is not positive definite.", RuntimeWarning, stacklevel=2)
+        return np.full(k, np.nan)
+    return np.sqrt(np.diag(np.linalg.inv(H)))
+
+
 def fit_garch11(returns_pct, initialization="sample"):
     """Return estimates, BHHH standard errors, log likelihood and fitted variances.
 
@@ -109,7 +145,9 @@ def fit_garch11(returns_pct, initialization="sample"):
         se = np.full(4, np.nan)
 
     names = ["mu", "omega", "alpha", "beta"]
+    hessian_se = hessian_standard_errors(y, [mu, w, a, b], v, initialization)
     return {
+        "hessian_standard_errors": dict(zip(names, hessian_se)),
         "estimates": dict(zip(names, [mu, w, a, b])),
         "standard_errors": dict(zip(names, se)),
         "loglik": -float(fit.fun),
